@@ -8,6 +8,7 @@ include(ExternalProject)
 
 ExternalProject_Add(gflags
   SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
+  UPDATE_COMMAND ""
   CONFIGURE_COMMAND cd ../gflags && ./autogen.sh && ./configure --with-pic GFLAGS_NAMESPACE=gflags --prefix=${CATKIN_DEVEL_PREFIX}
   BUILD_COMMAND cd ../gflags && make -j8
   INSTALL_COMMAND cd ../gflags && make install -j8
@@ -15,6 +16,8 @@ ExternalProject_Add(gflags
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME}_dependency_tracker gflags)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker 
+  ${CATKIN_DEVEL_PREFIX}/lib/libgflags.so)
 
 cs_install()
 
