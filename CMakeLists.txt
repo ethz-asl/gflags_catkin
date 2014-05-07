@@ -6,16 +6,18 @@ catkin_simple()
 
 include(ExternalProject)
 
-ExternalProject_Add(gflags
+ExternalProject_Add(gflags_src
   SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
-  CONFIGURE_COMMAND cd ../gflags && ./autogen.sh && ./configure --with-pic GFLAGS_NAMESPACE=gflags --prefix=${CATKIN_DEVEL_PREFIX}
-  BUILD_COMMAND cd ../gflags && make -j8
-  INSTALL_COMMAND cd ../gflags && make install -j8
+  UPDATE_COMMAND ""
+  CONFIGURE_COMMAND cd ../gflags_src && ./autogen.sh && ./configure --with-pic GFLAGS_NAMESPACE=gflags --prefix=${CATKIN_DEVEL_PREFIX}
+  BUILD_COMMAND cd ../gflags_src && make -j8
+  INSTALL_COMMAND cd ../gflags_src && make install -j8
 )
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
-add_dependencies(${PROJECT_NAME}_dependency_tracker gflags)
-
+add_dependencies(${PROJECT_NAME}_dependency_tracker gflags_src)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker gflags)
 cs_install()
 
-cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include)
+cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
+  CFG_EXTRAS gflags-extras.cmake)
