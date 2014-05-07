@@ -5,6 +5,7 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 include(ExternalProject)
+link_directories(${CATKIN_DEVEL_PREFIX}/lib)
 
 ExternalProject_Add(gflags_src
   SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
