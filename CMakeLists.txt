@@ -6,11 +6,14 @@ catkin_simple()
 
 include(ExternalProject)
 link_directories(${CATKIN_DEVEL_PREFIX}/lib)
+file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(gflags_src
   SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND cd ../gflags_src && ./autogen.sh && ./configure --with-pic GFLAGS_NAMESPACE=gflags --prefix=${CATKIN_DEVEL_PREFIX}
+  CONFIGURE_COMMAND cd ../gflags_src && ./autogen.sh && 
+    ./configure --with-pic GFLAGS_NAMESPACE=gflags 
+      --prefix=${CATKIN_DEVEL_PREFIX}
   BUILD_COMMAND cd ../gflags_src && make -j8
   INSTALL_COMMAND cd ../gflags_src && make install -j8
 )
