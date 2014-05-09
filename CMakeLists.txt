@@ -5,9 +5,8 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 include(ExternalProject)
-link_directories(${CATKIN_DEVEL_PREFIX}/lib)
-file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
+file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 ExternalProject_Add(gflags_src
   SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
   UPDATE_COMMAND ""
@@ -20,7 +19,9 @@ ExternalProject_Add(gflags_src
 
 cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME}_dependency_tracker gflags_src)
-target_link_libraries(${PROJECT_NAME}_dependency_tracker gflags)
+target_link_libraries(${PROJECT_NAME}_dependency_tracker 
+  ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_SHARED_LIBRARY_SUFFIX})
+
 cs_install()
 
 cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
