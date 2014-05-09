@@ -17,9 +17,9 @@ ExternalProject_Add(gflags_src
   INSTALL_COMMAND cd ../gflags_src && make install -j8
 )
 
-cs_add_library(${PROJECT_NAME}_dependency_tracker src/dependency_tracker.cc)
-add_dependencies(${PROJECT_NAME}_dependency_tracker gflags_src)
-target_link_libraries(${PROJECT_NAME}_dependency_tracker 
+cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
+add_dependencies(${PROJECT_NAME} gflags_src)
+target_link_libraries(${PROJECT_NAME} 
   ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 cs_install()
