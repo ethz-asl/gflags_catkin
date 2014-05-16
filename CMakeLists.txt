@@ -8,14 +8,12 @@ include(ExternalProject)
 
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 ExternalProject_Add(gflags_src
-  SVN_REPOSITORY http://gflags.googlecode.com/svn/trunk/
+  GIT_REPOSITORY https://code.google.com/p/gflags/
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND cd ../gflags_src && ./autogen.sh && 
-    ./configure --with-pic GFLAGS_NAMESPACE=gflags 
-      --prefix=${CATKIN_DEVEL_PREFIX}
-  BUILD_COMMAND cd ../gflags_src && make -j8
-  INSTALL_COMMAND cd ../gflags_src && make install -j8
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
+  -DBUILD_SHARED_LIBS:BOOL=true
 )
+
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME} gflags_src)
