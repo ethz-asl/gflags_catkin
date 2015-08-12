@@ -8,7 +8,7 @@ include(ExternalProject)
 
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 ExternalProject_Add(gflags_src
-  GIT_REPOSITORY https://code.google.com/p/gflags/
+  GIT_REPOSITORY https://github.com/gflags/gflags
   UPDATE_COMMAND ""
   CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
   -DBUILD_SHARED_LIBS:BOOL=true
