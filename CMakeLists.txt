@@ -6,15 +6,20 @@ catkin_simple()
 
 include(ExternalProject)
 
-file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
-ExternalProject_Add(gflags_src
-  GIT_REPOSITORY https://code.google.com/p/gflags/
+ExternalProject_Add(
+  gflags_src
+  URL https://github.com/gflags/gflags/archive/v2.1.2.zip
+  URL_MD5 5cb0a1b38740ed596edb7f86cd5b3bd8
   UPDATE_COMMAND ""
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
-  -DBUILD_SHARED_LIBS:BOOL=true
-  -DGFLAGS_NAMESPACE:STRING=google -DCMAKE_BUILD_TYPE:STRING=Release
+  CONFIGURE_COMMAND cd ../gflags_src &&
+     cmake . 
+       -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
+       -DBUILD_SHARED_LIBS:BOOL=true
+       -DGFLAGS_NAMESPACE:STRING=google
+       -DCMAKE_BUILD_TYPE:STRING=Release
+  BUILD_COMMAND cd ../gflags_src && make -j 8
+  INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
-
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME} gflags_src)
