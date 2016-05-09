@@ -6,6 +6,8 @@ catkin_simple()
 
 include(ExternalProject)
 
+file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
+
 ExternalProject_Add(
   gflags_src
   URL https://github.com/gflags/gflags/archive/v2.1.2.zip
