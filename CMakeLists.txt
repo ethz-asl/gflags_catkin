@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(gflags_catkin)
 
-find_package(catkin REQUIRED)
+find_package(catkin_simple REQUIRED)
+catkin_simple()
 
 include(ExternalProject)
 
@@ -22,12 +23,11 @@ ExternalProject_Add(
   INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
 
-include_directories(include ${CATKIN_DEVEL_PREFIX}/include ${catkin_INCLUDE_DIRS})
-catkin_package(
-  INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
-  LIBRARIES gflags)
-install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/gflags DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/gflags
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
         FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
-        DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}
+        DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         FILES_MATCHING PATTERN "libgflags*")
+cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
+          LIBRARIES gflags)
