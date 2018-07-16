@@ -14,7 +14,7 @@ ExternalProject_Add(
   URL_MD5 5cb0a1b38740ed596edb7f86cd5b3bd8
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND cd ../gflags_src &&
-     cmake . 
+     cmake .
        -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
        -DBUILD_SHARED_LIBS:BOOL=true
        -DGFLAGS_NAMESPACE:STRING=google
@@ -23,12 +23,14 @@ ExternalProject_Add(
   INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
 
-cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
-add_dependencies(${PROJECT_NAME} gflags_src)
-target_link_libraries(${PROJECT_NAME} 
-  ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_SHARED_LIBRARY_SUFFIX})
-
-cs_install()
-
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/include/gflags
+        DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${CATKIN_DEVEL_PREFIX}/lib/
+        DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        FILES_MATCHING PATTERN "libgflags*")
+install(FILES ${CATKIN_DEVEL_PREFIX}/bin/gflags_completions.sh
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+        DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 cs_export(INCLUDE_DIRS ${CATKIN_DEVEL_PREFIX}/include
-  CFG_EXTRAS gflags-extras.cmake)
+          LIBRARIES gflags)
