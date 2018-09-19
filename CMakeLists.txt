@@ -10,8 +10,8 @@ file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(
   gflags_src
-  URL https://github.com/gflags/gflags/archive/v2.1.2.zip
-  URL_MD5 5cb0a1b38740ed596edb7f86cd5b3bd8
+  URL https://github.com/gflags/gflags/archive/v2.2.1.zip
+  URL_MD5 2d988ef0b50939fb50ada965dafce96b
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND cd ../gflags_src &&
      cmake .
