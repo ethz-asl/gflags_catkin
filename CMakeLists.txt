@@ -19,6 +19,7 @@ ExternalProject_Add(
        -DBUILD_SHARED_LIBS:BOOL=true
        -DGFLAGS_NAMESPACE:STRING=google
        -DCMAKE_BUILD_TYPE:STRING=Release
+       -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE}
   BUILD_COMMAND cd ../gflags_src && make -j 8
   INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
